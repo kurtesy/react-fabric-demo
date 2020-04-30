@@ -17,25 +17,20 @@ class ReloadJson extends React.Component {
   }
 
   state = {
-    data: {},
-    canvas: null
+    data: {}
   }
 
+  canvas = new fabric.Canvas(this.c);
+
   componentDidMount() {
-    const canvas = new fabric.Canvas(this.c)
-    this.setState({ canvas, data: sampleJsonData});
+    this.canvas = new fabric.Canvas(this.c)
+    // this.setState({ data: sampleJsonData});
     document.getElementById('jsonText').value = JSON.stringify(sampleJsonData);
   }
 
-  componentDidUpdate() {
-    console.log(this.state);
-  }
-
   renderJsonData = () => {
-    let newCanvas = this.state.canvas;
-    newCanvas.loadFromJSON(this.state.data, newCanvas.renderAll.bind(newCanvas))
-    newCanvas.renderAll();
-    this.setState({ canvas: newCanvas })
+    this.canvas.loadFromJSON(this.state.data, this.canvas.renderAll.bind(this.canvas))
+    this.canvas.renderAll();
   }
 
   readJsonData = data => {
@@ -43,8 +38,8 @@ class ReloadJson extends React.Component {
     let jsonData = {};
     try {
       jsonData = JSON.parse(textElement);
-      console.log('OK');
-      this.setState({canvas: this.state.canvas.clear(), data:textElement});
+      console.log('Rendering JSON...');
+      this.setState({data:textElement});
       this.renderJsonData();
     }
     catch (e) {
@@ -52,11 +47,12 @@ class ReloadJson extends React.Component {
       console.log(e.stack);
     }
     console.log(jsonData);
+    this.canvas.renderAll();
   }
 
   clear = e => {
     e.preventDefault()
-    this.state.canvas.clear()
+    this.canvas.clear()
   }
 
   canvasStyle = {
@@ -68,13 +64,13 @@ class ReloadJson extends React.Component {
     const { width, height } = this.props;
     return (
       <Fragment>
-        <canvas ref={c => (this.c = c)} width={width} height={height} 
+        <canvas ref={c => (this.c = c)} width={width} height={height}
                 style={this.canvasStyle}/>
         <br />
-        <textarea id="jsonText" defaultValue={JSON.stringify(this.state.data)} 
+        <textarea id="jsonText" defaultValue={JSON.stringify(this.state.data)}
                   rows="10" cols="80"/>
         <br/>
-       <button onClick={this.readJsonData}>
+        <button onClick={this.readJsonData}>
           Render JSON on Canvas
         </button>
         <button
