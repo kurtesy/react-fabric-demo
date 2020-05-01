@@ -1,0 +1,9 @@
+.rightPanel {
+    color: white;
+    background-color: #9c27b06e;
+    padding: 10px;
+    border: solid 3px;
+    border-radius: 12px;
+    display: table;
+    position: absolute
+}

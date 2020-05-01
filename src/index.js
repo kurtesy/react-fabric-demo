@@ -10,7 +10,8 @@ const mainStyle = {
   textAlign: 'center',
   marginLeft: 'auto',
   marginRight: 'auto',
-  width: '50%'
+  width: '50%',
+  color: 'Yellow',
 }
 
 const App = () => (
