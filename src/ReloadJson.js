@@ -1,6 +1,7 @@
 import React, { Fragment } from 'react'
 import PropTypes from 'prop-types'
 import sampleJsonData from './testJsonOutput'
+import styles from './styles/canvas.module.css'
 
 
 const fabric = window.fabric;
@@ -12,8 +13,8 @@ class ReloadJson extends React.Component {
   }
 
   static defaultProps = {
-    width: 600,
-    height: 300,
+    width: 800,
+    height: 600,
   }
 
   state = {
@@ -56,7 +57,7 @@ class ReloadJson extends React.Component {
   }
 
   canvasStyle = {
-    borderStyle: "solid",
+    border: "solid 1px #4CAF50",
     marginTop: "5px"
   }
 
@@ -65,7 +66,7 @@ class ReloadJson extends React.Component {
     return (
       <Fragment>
         <canvas ref={c => (this.c = c)} width={width} height={height}
-                style={this.canvasStyle}/>
+                className={styles.canvasStyle}/>
         <br />
         <textarea id="jsonText" defaultValue={JSON.stringify(this.state.data)}
                   rows="10" cols="80"/>
