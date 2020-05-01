@@ -1,7 +1,7 @@
-import React from 'react'
-import PropTypes from 'prop-types'
+import React from 'react';
+import PropTypes from 'prop-types';
 
-const fabric = window.fabric
+const fabric = window.fabric;
 
 class Rect extends React.Component {
   static propTypes = {
@@ -14,16 +14,18 @@ class Rect extends React.Component {
   }
 
   static defaultProps = {
-    top: 0,
-    left: 0,
+    top: 10,
+    left: 10,
     width: 50,
     height: 50,
-    fill: 'red',
+    fill: 'white',
   }
 
   componentDidMount() {
-    const rect = new fabric.Rect(this.props)
+    const rect = new fabric.Rect({...this.props, stroke: 'black',
+      strokeWidth: 1})
     this.props.canvas.add(rect)
+    this.props.canvas.setActiveObject(rect);
   }
 
   render() {

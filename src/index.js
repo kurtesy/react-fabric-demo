@@ -3,7 +3,7 @@ import { render } from 'react-dom'
 import 'fabric-webpack'
 
 import DesignCanvas from './DesignCanvas'
-import FreeDraw from './Freedraw'
+import FreeDraw from './components/Freedraw'
 import ReloadJson from './ReloadJson'
 
 const mainStyle = {

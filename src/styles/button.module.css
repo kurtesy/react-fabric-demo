@@ -1,6 +1,5 @@
 .btn {
     color: #20bf6b !important;
-    text-transform: uppercase;
     background: #ffffff;
     padding: 10px;
     border: 4px solid #20bf6b !important;
@@ -14,4 +13,15 @@
     border-radius: 50px;
     border-color: #494949 !important;
     transition: all 0.3s ease 0s;
+}
+
+.brush {
+    color: black !important;
+    background: #ffffff;
+    border: 2px solid black !important;
+    transition: all 0.3s ease 0s;
+}
+
+.brush:hover {
+    color: darkorange !important;
 }
