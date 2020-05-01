@@ -1,12 +1,14 @@
-import React, { Component } from 'react'
-import PropTypes from 'prop-types'
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { FaSquareFull, FaDotCircle, FaFileImage, FaPencilAlt } from 'react-icons/fa';
+import styles from './styles/button.module.css';
 
 class ControlPanel extends Component {
   static propTypes = {
     canvas: PropTypes.object.isRequired,
     onChange: PropTypes.func,
     showFigures: PropTypes.func,
-    addBackgroudImg: PropTypes.func
+    addBackgroundImg: PropTypes.func
   }
   static defaultProps = {
     onChange: function () {},
@@ -25,7 +27,7 @@ class ControlPanel extends Component {
 
   componentDidMount () {
     let selectedImg = document.getElementById('images').value;
-    this.props.addBackgroudImg(selectedImg);
+    this.props.addBackgroundImg(selectedImg);
     this.setState({backgroundImg: selectedImg});
   }
 
@@ -67,13 +69,13 @@ class ControlPanel extends Component {
     this.props.showFigures(this.state.show);
   }
 
-  // addBackgroudImg = event => {
+  // addBackgroundImg = event => {
   //   event.stopPropagation();
   //   event.preventDefault();
   //   console.log(event.target);
   //   var file = event.target.files[0];
   //   console.log(JSON.stringify(file));
-  //   //this.props.addBackgroudImg(imageObj);
+  //   //this.props.addBackgroundImg(imageObj);
   // }
 
   selectImage = img => {
@@ -85,13 +87,19 @@ class ControlPanel extends Component {
   render() {
     const controlPanel = {
       color: 'white',
-      backgroundColor: 'Grey',
+      backgroundColor: '#9c27b06e',
       padding: '10px',
       fontFamily: 'Arial',
+      border: 'solid 3px',
+      borderRadius: '12px',
+      width: '50%',
+      marginLeft: 'auto',
+      marginRight: 'auto'
     }
 
     return (
       <div style={controlPanel}>
+
         <label>
           Drawing: <input id="canDraw" type="checkbox"
                           defaultChecked onChange={this.canUseBrush}/>
@@ -112,11 +120,13 @@ class ControlPanel extends Component {
             step="1"
           />
         </label>
-        <button id="rect" onClick={this.renderFigure}>Show Rectange
+
+        <button id="rect" className={styles.btn} onClick={this.renderFigure}><FaSquareFull/>
         </button>
-        <button id="circle" onClick={this.renderFigure}>Show Circle
+
+        <button id="circle" className={styles.btn} onClick={this.renderFigure}><FaDotCircle />
         </button>
-        <button id="image" onClick={this.renderFigure}>Show Image
+        <button id="image" className={styles.btn} onClick={this.renderFigure}><FaFileImage />
         </button>
 
         <br/>

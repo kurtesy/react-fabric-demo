@@ -12,8 +12,8 @@ class ReloadJson extends React.Component {
   }
 
   static defaultProps = {
-    width: 600,
-    height: 300,
+    width: 800,
+    height: 600,
   }
 
   state = {
@@ -56,7 +56,7 @@ class ReloadJson extends React.Component {
   }
 
   canvasStyle = {
-    borderStyle: "solid",
+    border: "solid 1px #4CAF50",
     marginTop: "5px"
   }
 

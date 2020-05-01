@@ -6,8 +6,15 @@ import DesignCanvas from './DesignCanvas'
 import FreeDraw from './Freedraw'
 import ReloadJson from './ReloadJson'
 
+const mainStyle = {
+  textAlign: 'center',
+  marginLeft: 'auto',
+  marginRight: 'auto',
+  width: '50%'
+}
+
 const App = () => (
-  <div>
+  <div style={mainStyle}>
     <h3>Master Screen</h3>
     <DesignCanvas>
       <FreeDraw />
@@ -16,6 +23,6 @@ const App = () => (
     <h3>Client Screen</h3>
     <ReloadJson />
   </div>
-)
+);
 
 render(<App />, document.getElementById('root'))
