@@ -1,6 +1,7 @@
 import React, { Fragment } from 'react'
 import PropTypes from 'prop-types'
-import styles from './styles/canvas.module.css'
+import canvasStyle from './styles/canvas.module.css'
+import panelStyle from './styles/panel.module.css'
 import ControlPanel from './controlPanel'
 import Rect from './components/Rect'
 import Circle from './components/Circle'
@@ -32,9 +33,11 @@ class DesignCanvas extends React.Component {
 
   componentDidMount() {
     this.canvas = new fabric.Canvas(this.c)
+    this.canvas.backgroundColor = "#ffffff";
     this.canvas.freeDrawingBrush.width = 10;
-    this.canvas.isDrawingMode = true;
+    this.canvas.isDrawingMode = false;
     this.canvas.freeDrawingBrush.color = "#ff0000";
+    this.canvas.renderAll();
     console.log(this.canvas)
   }
 
@@ -87,15 +90,8 @@ class DesignCanvas extends React.Component {
     this.setState({show});
   }
 
-  canvasStyle = {
-    border: "solid 1px #4CAF50",
-    marginTop: "5px",
-    backgroundColor: 'white'
-  }
-
 
   render() {
-    this.canvas.backgroundColor = "#ffffff";
     const children = React.Children.map(this.props.children, child => {
       return React.cloneElement(child, {
         canvas: this.canvas,
@@ -111,27 +107,28 @@ class DesignCanvas extends React.Component {
           showFigures={this.showFigures}
           addBackgroundImg={this.addBackgroundImg}/>
         <table>
+          <tbody>
           <tr>
             <td>
-            <canvas ref={c => (this.c = c)} width={width} height={height} className={styles.canvasStyle}/>
+            <canvas ref={c => (this.c = c)} width={width} height={height} className={canvasStyle.canvasStyle}/>
             {this.canvas && children}
             {this.state.show.rect && <Rect canvas={this.canvas}/>}
             {this.state.show.circle && <Circle radius={20} top={200} canvas={this.canvas}/>}
             {this.state.show.image && <Image url="https://http.cat/100" scale={0.2} top={100} canvas={this.canvas}/>}
             <br />
               </td>
-            <td>
+            <td className={panelStyle.rightPanel}>
             <button
               onClick={e => this.canvasToJson(e)}>
               To JSON
             </button>
             <button
-              onClick={e => this.clear(e)}
-            >
+              onClick={e => this.clear(e)}>
               Clear Canvas
             </button>
               </td>
-            </tr>
+          </tr>
+          </tbody>
         </table>
       </Fragment>
     )
