@@ -1,19 +1,22 @@
 {
   "files": {
-    "main.js": "/react-fabric-demo/static/js/main.d63e33f2.chunk.js",
-    "main.js.map": "/react-fabric-demo/static/js/main.d63e33f2.chunk.js.map",
+    "main.css": "/react-fabric-demo/static/css/main.0f81e771.chunk.css",
+    "main.js": "/react-fabric-demo/static/js/main.ad371642.chunk.js",
+    "main.js.map": "/react-fabric-demo/static/js/main.ad371642.chunk.js.map",
     "runtime-main.js": "/react-fabric-demo/static/js/runtime-main.15bfecaf.js",
     "runtime-main.js.map": "/react-fabric-demo/static/js/runtime-main.15bfecaf.js.map",
-    "static/js/2.f2243ead.chunk.js": "/react-fabric-demo/static/js/2.f2243ead.chunk.js",
-    "static/js/2.f2243ead.chunk.js.map": "/react-fabric-demo/static/js/2.f2243ead.chunk.js.map",
+    "static/js/2.12f2e21a.chunk.js": "/react-fabric-demo/static/js/2.12f2e21a.chunk.js",
+    "static/js/2.12f2e21a.chunk.js.map": "/react-fabric-demo/static/js/2.12f2e21a.chunk.js.map",
     "index.html": "/react-fabric-demo/index.html",
-    "precache-manifest.8760b95c603d0b5026ee42aceb731055.js": "/react-fabric-demo/precache-manifest.8760b95c603d0b5026ee42aceb731055.js",
+    "precache-manifest.abb4bc3b9cebb0bd7a79fe57d00a88c0.js": "/react-fabric-demo/precache-manifest.abb4bc3b9cebb0bd7a79fe57d00a88c0.js",
     "service-worker.js": "/react-fabric-demo/service-worker.js",
-    "static/js/2.f2243ead.chunk.js.LICENSE.txt": "/react-fabric-demo/static/js/2.f2243ead.chunk.js.LICENSE.txt"
+    "static/css/main.0f81e771.chunk.css.map": "/react-fabric-demo/static/css/main.0f81e771.chunk.css.map",
+    "static/js/2.12f2e21a.chunk.js.LICENSE.txt": "/react-fabric-demo/static/js/2.12f2e21a.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.15bfecaf.js",
-    "static/js/2.f2243ead.chunk.js",
-    "static/js/main.d63e33f2.chunk.js"
+    "static/js/2.12f2e21a.chunk.js",
+    "static/css/main.0f81e771.chunk.css",
+    "static/js/main.ad371642.chunk.js"
   ]
 }
