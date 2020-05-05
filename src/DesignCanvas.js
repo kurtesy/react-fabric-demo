@@ -3,12 +3,8 @@ import PropTypes from 'prop-types'
 import canvasStyle from './styles/canvas.module.css'
 import panelStyle from './styles/panel.module.css'
 import ControlPanel from './controlPanel'
-import Rect from './components/Rect'
-import Circle from './components/Circle'
-import Image from './components/Image'
-import { FaRegWindowClose } from 'react-icons/fa';
 
-const fabric = window.fabric
+const fabric = window.fabric;
 
 class DesignCanvas extends React.Component {
   static propTypes = {
@@ -17,32 +13,35 @@ class DesignCanvas extends React.Component {
   }
 
   static defaultProps = {
-    width: 800,
-    height: 600,
+    width: 1200,
+    height: 800,
   }
 
   canvas = new fabric.Canvas(this.c);
 
   state = {
     mousecursor: null,
-    show: {rect: false,
-      circle: false,
-      image: false},
-    backgroudImg: null
+    backgroudImg: null,
+    canvas: this.canvas
   }
 
   componentDidMount() {
+    console.log('componentDidMount');
     this.canvas = new fabric.Canvas(this.c)
     this.canvas.backgroundColor = "#ffffff";
     this.canvas.freeDrawingBrush.width = 10;
     this.canvas.isDrawingMode = false;
     this.canvas.freeDrawingBrush.color = "#ff0000";
     this.canvas.renderAll();
-    console.log(this.canvas)
+    this.setState({canvas: this.canvas});
   }
 
-  updatedCanvas = newCanvas => {
+  updateCanvas = newCanvas => {
     this.canvas = newCanvas;
+    this.canvas.renderAll();
+    this.setState({canvas: newCanvas});
+    console.log('newCanvas', newCanvas)
+    console.log(' this.canvas',  this.canvas);
   }
 
   onControlChange = data => {
@@ -80,44 +79,38 @@ class DesignCanvas extends React.Component {
   }
 
   clear = e => {
-    const show = {rect: false,
-      circle: false,
-      image: false}
     e.preventDefault()
     this.canvas.clear();
     this.canvas.backgroundImage = null;
+    this.canvas.backgroundColor = "#ffffff";
     this.canvas.renderAll();
-    this.setState({show});
   }
 
 
   render() {
-    const children = React.Children.map(this.props.children, child => {
+    const children = React.Children.map(this.state.children, child => {
       return React.cloneElement(child, {
         canvas: this.canvas,
-        updatedCanvas: this.updatedCanvas,
+        updateCanvas: this.updateCanvas,
       })
     })
     const { width, height } = this.props
     return (
       <Fragment>
-        <ControlPanel
-          canvas={this.canvas}
-          onChange={this.onControlChange}
-          showFigures={this.showFigures}
-          addBackgroundImg={this.addBackgroundImg}/>
         <table>
           <tbody>
           <tr>
             <td>
             <canvas ref={c => (this.c = c)} width={width} height={height} className={canvasStyle.canvasStyle}/>
             {this.canvas && children}
-            {this.state.show.rect && <Rect canvas={this.canvas}/>}
-            {this.state.show.circle && <Circle radius={20} top={200} canvas={this.canvas}/>}
-            {this.state.show.image && <Image url="https://http.cat/100" scale={0.2} top={100} canvas={this.canvas}/>}
             <br />
               </td>
             <td className={panelStyle.rightPanel}>
+              <ControlPanel
+                canvas={this.state.canvas}
+                onChange={this.onControlChange}
+                updateCanvas={this.updateCanvas}
+                addBackgroundImg={this.addBackgroundImg}/>
             <button
               onClick={e => this.canvasToJson(e)}>
               To JSON

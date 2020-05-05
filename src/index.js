@@ -1,16 +1,16 @@
 import React from 'react'
 import { render } from 'react-dom'
-import 'fabric-webpack'
+import 'fabric'
 
 import DesignCanvas from './DesignCanvas'
-import FreeDraw from './components/Freedraw'
+
 import ReloadJson from './ReloadJson'
+import FreeDraw from './components/Freedraw'
 
 const mainStyle = {
   textAlign: 'center',
-  marginLeft: 'auto',
-  marginRight: 'auto',
-  width: '50%',
+  marginLeft: '10px',
+  marginRight: '10px',
   color: 'Yellow',
 }
 
