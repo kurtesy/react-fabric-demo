@@ -7,14 +7,16 @@
   "main": "src/index.js",
   "proxy": "http://localhost:3000",
   "dependencies": {
-    "fabric-webpack": "1.6.0-rc.1",
+    "fabric": "^3.6.3",
     "lodash.omit": "4.5.0",
     "pdfjs-dist": "^2.3.200",
     "prop-types": "15.6.1",
     "react": "16.8.0",
     "react-dom": "^16.13.1",
+    "react-file-picker-preview": "0.0.9",
     "react-icons": "^3.10.0",
     "react-scripts": "^3.4.1",
+    "react-spinners": "^0.8.3",
     "yarn": "^1.22.4"
   },
   "devDependencies": {

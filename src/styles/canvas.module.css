@@ -1,4 +1,7 @@
 .canvasStyle {
     border: 1px solid #4CAF50;
-    margin-top: 5px;
+    margin: 5px;
+    height: 50%;
+    width: 90%;
+    overflow-x: scroll;
 }

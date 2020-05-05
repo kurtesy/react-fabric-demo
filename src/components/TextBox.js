@@ -1,34 +1,19 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-
 const fabric = window.fabric
 
-class Rect extends React.Component {
-  static propTypes = {
-    canvas: PropTypes.object,
-    top: PropTypes.number.isRequired,
-    left: PropTypes.number.isRequired,
-    width: PropTypes.number.isRequired,
-    height: PropTypes.number.isRequired,
-    fill: PropTypes.string.isRequired,
-  }
-
-  static defaultProps = {
-    top: 0,
-    left: 0,
-    width: 50,
-    height: 50,
-    fill: 'white',
-  }
-
-  componentDidMount() {
-    const textBox = new fabric.Textbox(this.props);
-    this.props.canvas.add(textBox)
-  }
-
-  render() {
-    return null
-  }
+const defaultProps = {
+    top: 10,
+    left: 10,
+    fontSize: 18,
+    fontFamily: 'Times New Roman'
 }
 
-export default Rect
+let counter = 0;
+
+const TextBox = (id) => {
+        let textID = Date.now().toString();
+        console.log('textID', textID)
+        let textBox = new fabric.IText("'Lorum ipsum dolor sit amet'", defaultProps);
+        return textBox;
+}
+
+export default TextBox;

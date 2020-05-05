@@ -1,16 +1,22 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { FaSquareFull, FaCircle, FaFileImage, FaPencilAlt } from 'react-icons/fa';
+import { FaSquareFull, FaCircle, FaFileImage, FaPencilAlt, FaEraser, FaICursor, FaSlash } from 'react-icons/fa';
 import styles from './styles/button.module.css';
+import panelStyles from './styles/panel.module.css';
 import pdfjs from 'pdfjs-dist';
+import TextBox from './components/TextBox'
+import Rect from './components/Rect'
+import EraserBrush from './components/Eraser'
+import BackgroundControlPanel from './components/BackgroudSelectionCP'
 
-var pdfjsLib = window['pdfjs-dist/build/pdf'];
+// const pdfjsLib = window['pdfjs-dist/build/pdf'];
+const fabric = window.fabric;
 
 class ControlPanel extends Component {
   static propTypes = {
     canvas: PropTypes.object.isRequired,
     onChange: PropTypes.func,
-    showFigures: PropTypes.func,
+    updateCanvas: PropTypes.func,
     addBackgroundImg: PropTypes.func
   }
   static defaultProps = {
@@ -22,76 +28,91 @@ class ControlPanel extends Component {
     brushsize: 10,
     canDraw: false,
     brushcolor:"#ff0000",
-    show: {rect: false,
-      circle: false,
-      image: false},
-    backgroundImg: null
+    backgroundImg: null,
+    addTextBox: false,
+    eraserActive: false
+  }
+
+  componentMap = {
+    'textBox': TextBox(),
+    'rect': Rect
   }
 
   componentDidMount () {
-    let selectedImg = document.getElementById('images').value;
-    this.props.addBackgroundImg(selectedImg);
-    this.setState({backgroundImg: selectedImg});
+    console.log('CPPP',  this.props.canvas);
+    // let selectedImg = document.getElementById('images').value;
+    // this.props.addBackgroundImg(selectedImg);
+    // this.setState({backgroundImg: selectedImg});
+  }
+
+  resetBrush = () => {
+    if (this.state.eraserActive) {
+      console.log('resetBrush');
+      this.props.canvas.freeDrawingBrush = new fabric.PencilBrush();
+      this.props.canvas.freeDrawingBrush.width = this.state.brushsize;
+      this.props.canvas.isDrawingMode = false;
+      this.props.canvas.freeDrawingBrush.color = this.state.brushcolor;
+      this.setState({eraserActive: false});
+    }
   }
 
   brushSizeChange = (event, size) => {
     event.preventDefault();
+    console.log('brushSizeChange');
+    this.resetBrush();
     this.setState({ brushsize: size }, function () {
       this.props.onChange(this.state)
     }.bind(this));
   }
 
   canUseBrush = event => {
+    console.log('canUseBrush');
+    this.resetBrush();
     this.setState({ canDraw: !this.state.canDraw }, function () {
       this.props.onChange(this.state)
     }.bind(this));
   }
 
   brushColorChange = event => {
+    console.log('brushColorChange');
+    this.resetBrush();
     this.setState({ brushcolor: event.target.value }, function () {
       this.props.onChange(this.state)
     }.bind(this));
   }
 
-  renderFigure = event => {
-    let id = event.target.id
-    let show = this.state.show;
-    if (id === "rect")
-    {
-      console.log(event.target.id);
-      show.rect = true;
-    }
-    if (id === "circle")
-    {
-      show.circle = true;
-    }
-    if (id === "image")
-    {
-      show.image = true;
-    }
-    this.props.showFigures(this.state.show);
+  eraser = (e) => {
+    e.preventDefault();
+    console.log('eraser');
+    this.props.canvas.isDrawingMode = true;
+    const eraserBrush = new EraserBrush(this.props.canvas);
+    eraserBrush.width = 10;
+    eraserBrush.color = "#ffffff";
+    this.props.canvas.freeDrawingBrush = eraserBrush;
+    this.props.onChange(this.state)
+    console.log(this.props.canvas.freeDrawingBrush);
+    this.setState({eraserActive: true})
   }
 
-  // addBackgroundImg = event => {
-  //   event.stopPropagation();
-  //   event.preventDefault();
-  //   console.log(event.target);
-  //   var file = event.target.files[0];
-  //   console.log(JSON.stringify(file));
-  //   //this.props.addBackgroundImg(imageObj);
-  // }
+  renderFigure = event => {
+    let id = event.target.id
+    console.log('Figure:', id)
+  }
+
 
   selectImage = img => {
-    let selectedImg = document.getElementById('images').value;
-    let pageNo = document.getElementById('imagesPdf').value;
-    pageNo = parseInt(pageNo);
-    if ( pageNo !== -1)
-    {
-      this.readPDF(pageNo).then(img => {
-        this.props.addBackgroundImg(img);
-        this.setState({backgroundImg: img});
-      });
-    }
+    // let selectedImg = document.getElementById('images').value;
+    // let pageNo = document.getElementById('imagesPdf').value;
+    // pageNo = parseInt(pageNo);
+    // if ( pageNo !== -1)
+    // {
+    //   this.readPDF(pageNo).then(img => {
+    //     this.props.addBackgroundImg(img);
+    //     this.setState({backgroundImg: img});
+    //   });
+    // }
+    let selectedImg = img;
+    console.log(selectedImg);
     this.props.addBackgroundImg(selectedImg);
     this.setState({backgroundImg: selectedImg});
   }
@@ -100,7 +121,7 @@ class ControlPanel extends Component {
     let pdfImage;
     pdfjs.disableWorker = true;
     pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
-    let testUrl= "https://file-examples.com/wp-content/uploads/2017/10/file-sample_150kB.pdf"
+    let testUrl= "https://gahp.net/wp-content/uploads/2017/09/sample.pdf"
     let corsUrl = 'https://cors-anywhere.herokuapp.com/'
     return pdfjs.getDocument({ url: corsUrl+testUrl }).then(function getPdfHelloWorld(pdf) {
       return pdf.getPage(pageNo).then(function getPageHelloWorld(page) {
@@ -119,72 +140,80 @@ class ControlPanel extends Component {
     });
   }
 
+
+  addElement = (e, element) => {
+    e.preventDefault();
+    const canvasElement = this.componentMap[element];
+    console.log('addElement', this.props.canvas);
+    this.props.canvas.add(canvasElement);
+    this.props.canvas.setActiveObject(canvasElement);
+    this.props.canvas.isDrawingMode = false;
+    this.props.canvas.renderAll();
+    this.props.updateCanvas(this.props.canvas);
+  }
+
   render() {
-    const controlPanel = {
-      color: 'white',
-      backgroundColor: '#9c27b06e',
-      padding: '10px',
-      fontFamily: 'Arial',
-      border: 'solid 3px',
-      borderRadius: '12px',
-      width: '90%',
-      marginLeft: 'auto',
-      marginRight: 'auto',
-      // display: 'grid',
-      // gridAutoFlow: 'column',
-      // gridTemplateRows: '50px 100px',
-      // gridTemplateColumns: '100px 50px'
-    }
-
     return (
-      <div style={controlPanel}>
-          <button className={styles.btn} id="canDraw" onClick={this.canUseBrush}> <FaPencilAlt />
+      <div className={panelStyles.controlPanel}>
+        <div className={panelStyles.boxTitle}>
+          Base Tool Set
+        </div>
+        <div className={panelStyles.box}>
+          <button title="Pencil Tool" className={styles.btn} id="canDraw" onClick={this.canUseBrush}> <FaPencilAlt />
           </button>
-        <label>
-          Color: <input id="color" type="color" defaultValue="#ff0000"
-                        onChange={this.brushColorChange}/>
-        </label>
-        <button id="brushSize1" className={styles.brush} onClick={event => this.brushSizeChange(event,5)}><FaCircle style={{fontSize: 10}}/>
-        </button>
-        <button id="brushSize2" className={styles.brush} onClick={event => this.brushSizeChange(event,10)}><FaCircle style={{fontSize: 20}}/>
-        </button>
-        <button id="brushSize3" className={styles.brush} onClick={event => this.brushSizeChange(event,15)}><FaCircle style={{fontSize: 30}}/>
-        </button>
-        <button id="brushSize4" className={styles.brush} onClick={event => this.brushSizeChange(event,20)}><FaCircle style={{fontSize: 40}}/>
-        </button>
+          <button disabled={true} title="Eraser" className={styles.btn} id="erase" onClick={this.eraser}> <FaEraser />
+          </button>
+          <button title="Text Box" className={styles.btn} id="textBox" onClick={event => {this.addElement(event,'textBox')}}><FaICursor />
+          </button>
+          <button disabled={true} title="Draw Line" className={styles.btn} id="line" onClick={event => {this.addElement(event,'line')}}><FaSlash />
+          </button>
+        </div>
+        <div className={panelStyles.boxTitle}>
+          Color Pallet
+        </div>
+        <div className={panelStyles.box}>
+          <input title="Color Selector" id="color" type="color" defaultValue="#ff0000"
+                          onChange={this.brushColorChange}/>
+        </div>
+        <div className={panelStyles.boxTitle}>
+          Brush Size
+        </div>
+        <div className={panelStyles.box}>
+          <button title="brushSize1" id="brushSize1" className={styles.brush}
+                  onClick={event => this.brushSizeChange(event,2)}><FaCircle style={{fontSize: 2}}/>
+          </button>
+          <button title="brushSize2" id="brushSize2" className={styles.brush}
+                  onClick={event => this.brushSizeChange(event,5)}><FaCircle style={{fontSize: 5}}/>
+          </button>
+          <button title="brushSize3" id="brushSize3" className={styles.brush}
+                  onClick={event => this.brushSizeChange(event,10)}><FaCircle style={{fontSize: 10}}/>
+          </button>
+          <button title="brushSize4" id="brushSize4" className={styles.brush}
+                  onClick={event => this.brushSizeChange(event,15)}><FaCircle style={{fontSize: 15}}/>
+          </button>
+          <button title="brushSize5" id="brushSize5" className={styles.brush}
+                  onClick={event => this.brushSizeChange(event,20)}><FaCircle style={{fontSize: 20}}/>
+          </button>
+          <button title="brushSize6" id="brushSize6" className={styles.brush}
+                  onClick={event => this.brushSizeChange(event,25)}><FaCircle style={{fontSize: 25}}/>
+          </button>
 
-        <button id="rect" className={styles.btn} onClick={this.renderFigure}><FaSquareFull />
-        </button>
-
-        <button id="circle" className={styles.btn} onClick={this.renderFigure}><FaCircle />
-        </button>
-        <button id="image" className={styles.btn} onClick={this.renderFigure}><FaFileImage />
-        </button>
-
+        </div>
+        <div className={panelStyles.boxTitle}>
+          Basic Figures
+        </div>
+        <div className={panelStyles.box}>
+          <button title="Add Rectangle" id="rect" className={styles.btn} onClick={this.renderFigure}><FaSquareFull />
+          </button>
+          <button title="Add Circle" id="circle" className={styles.btn} onClick={this.renderFigure}><FaCircle />
+          </button>
+          <button title="Add PNG" id="image" className={styles.btn} onClick={this.renderFigure}><FaFileImage />
+          </button>
+        </div>
         <br/>
-        <label form="images">Choose a background image:</label>
-        <canvas id="the-canvas" style={{border: "1px solid black", display: "none"}}></canvas>
-        <select id="images" onChange={val => this.selectImage(val)}>
-          <option value=""> </option>
-          <option value="https://i.imgur.com/MrGY5EL.jpg">Grassland</option>
-          <option value="https://i.imgur.com/EVOFpNF.jpg">Snow</option>
-          <option value="https://i.imgur.com/pSJwd0s.jpg">Green Canvas</option>
-        </select>
-
-        <label form="imagesPdf">Choose a image from pdf:</label>
-        <canvas id="the-canvas" style={{border: "1px solid black", display: "none"}}></canvas>
-        <select id="imagesPdf" onChange={val => this.selectImage(val)}>
-          <option value='-1'>No Page Selected</option>
-          <option value='1'>Page-1</option>
-          <option value='2'>Page-2</option>
-          <option value='3'>Page-3</option>
-          <option value='4'>Page-4</option>
-        </select>
-
-        {/* <input type='file' id='file' ref={imgObj => (this.imgObj = imgObj)}
-                style={{display: 'none'}}
-                onChange={this.addBackgroudImg.bind(this)}/>
-        <button onClick={()=>{this.imgObj.click()}}>File upload </button> */}
+        <BackgroundControlPanel
+        selectImage={this.selectImage}
+        />
       </div>
     )
   }
