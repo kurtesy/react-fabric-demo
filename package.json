@@ -5,7 +5,6 @@
   "keywords": [],
   "homepage": "https://kurtesy.github.io/react-fabric-demo",
   "main": "src/index.js",
-  "proxy": "http://localhost:3000",
   "dependencies": {
     "fabric": "^3.6.3",
     "lodash.omit": "4.5.0",
