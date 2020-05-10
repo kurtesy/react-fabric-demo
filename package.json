@@ -6,19 +6,25 @@
   "homepage": "https://kurtesy.github.io/react-fabric-demo",
   "main": "src/index.js",
   "dependencies": {
+    "@material-ui/core": "^4.9.13",
     "fabric": "^3.6.3",
     "lodash.omit": "4.5.0",
+    "material-ui": "^0.20.2",
+    "material-ui-icons": "^1.0.0-beta.36",
     "pdfjs-dist": "^2.3.200",
     "prop-types": "15.6.1",
     "react": "16.8.0",
     "react-dom": "^16.13.1",
     "react-file-picker-preview": "0.0.9",
     "react-icons": "^3.10.0",
+    "react-router": "^5.1.2",
     "react-scripts": "^3.4.1",
     "react-spinners": "^0.8.3",
+    "websocket": "^1.0.31",
     "yarn": "^1.22.4"
   },
   "devDependencies": {
+    "@material-ui/icons": "^4.9.1",
     "gh-pages": "^2.2.0"
   },
   "scripts": {

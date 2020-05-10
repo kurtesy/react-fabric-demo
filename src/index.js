@@ -1,28 +1,29 @@
 import React from 'react'
 import { render } from 'react-dom'
 import 'fabric'
-
 import DesignCanvas from './DesignCanvas'
-
 import ReloadJson from './ReloadJson'
-import FreeDraw from './components/Freedraw'
+import Home from './Home'
 
 const mainStyle = {
-  textAlign: 'center',
-  marginLeft: '10px',
-  marginRight: '10px',
-  color: 'Yellow',
+
 }
 
 const App = () => (
   <div style={mainStyle}>
-    <h3>Master Screen</h3>
+      {/*<Router>*/}
+      {/*    <Route path = "/" component = {App}>*/}
+      {/*        <IndexRoute component = {Home} />*/}
+      {/*        <Route path = "home" component = {Home} />*/}
+      {/*        /!*<Route path = "about" component = {About} />*!/*/}
+      {/*        /!*<Route path = "contact" component = {Contact} />*!/*/}
+      {/*    </Route>*/}
+      {/*</Router>*/}
     <DesignCanvas>
-      <FreeDraw />
     </DesignCanvas>
-    <br />
-    <h3>Client Screen</h3>
-    <ReloadJson />
+    {/*<br />*/}
+    {/*<h3>Client Screen</h3>*/}
+    {/*<ReloadJson />*/}
   </div>
 );
 

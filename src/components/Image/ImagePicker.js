@@ -1,17 +1,18 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types'
-import CircleLoader from "react-spinners/CircleLoader";
-
-import spinnerStyles from '../styles/spinner.module.css'
+import Button from '@material-ui/core/Button'
+import buttonStyles from '../../styles/button.module.css'
 
 class FileSelector extends Component {
   static propTypes = {
     fileType: PropTypes.string,
-    selectImage: PropTypes.func
+    selectImage: PropTypes.func,
+    useButton: PropTypes.bool
   }
   static defaultProps = {
     selectImage: function() {},
-    fileType: 'image/*'
+    fileType: 'image/*',
+    useButton: true
   }
 
   state = {
@@ -32,11 +33,11 @@ class FileSelector extends Component {
 
   handleChange = selectorFiles => {
     console.log('selectorFiles', selectorFiles);
-    this.setState({loading: true})
+    this.props.setLoading(true)
     this.file = selectorFiles[0];
     this.fileToBase64(this.file).then(image => {
       this.props.selectImage(image);
-      this.setState({loading: false})
+      this.props.setLoading(false)
     }).catch(err=> {console.log('File Reader error', err)});
   }
 
@@ -44,21 +45,20 @@ class FileSelector extends Component {
   {
     return (
       <div>
+        <Button
+          variant={ this.props.useButton ? "contained" : "text"}
+          component="label"
+          size={'small'}
+          className={buttonStyles.panelBtn}
+          color={ this.props.useButton ? "primary" : "default"}
+        >
+          Upload an image
           <input type="file"
            onChange={ (e) => this.handleChange(e.target.files) }
            accept={this.props.fileType}
-           multiple={false} />
-        {this.state.loading && <div className={spinnerStyles.loaderDiv}>
-            <div className={spinnerStyles.loaderPosition}>
-                <CircleLoader
-                  style={spinnerStyles.loader}
-                  size={60}
-                  color={"#ff0000"}
-                  loading={this.state.loading}
-                />
-                Loading...
-            </div>
-           </div>}
+           multiple={false}
+           style={{ display: "none" }} />
+        </Button>
       </div>
     )
   }

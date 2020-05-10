@@ -1,7 +1,36 @@
 .canvasStyle {
-    border: 1px solid #4CAF50;
-    margin: 5px;
-    height: 50%;
-    width: 90%;
-    overflow-x: scroll;
+
+}
+
+.wrapper {
+    border: 2px double #4CAF50;
+    margin: 15px 25px 15px 60px;
+    padding: 5px;
+    height: 85%;
+    width: 95%;
+    box-sizing: border-box;
+    position: relative;
+    top: 0;
+    left: 0;
+    overflow-y:scroll;
+    overflow-x:scroll
+}
+
+.topNav {
+    background: linear-gradient(to right, #59C173, #a17fe0, #5D26C1) !important;
+    flex-grow: 1;
+}
+
+.topNav>.title {
+    font-family: "Century Schoolbook", sans-serif;
+    font-size: 30px;
+    padding: 5px;
+    flex: 100;
+    margin-top: 5px
+}
+
+
+.rightNav {
+    position: relative;
+    margin-left: 90%;
 }

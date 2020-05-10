@@ -31,9 +31,13 @@
     border-radius: 5px;
     padding: 5px;
     transition: all 0.3s ease 0s;
-    width: 75%
+    width: auto
 }
 
 .brush:hover {
     color: darkorange !important;
+}
+
+.panelBtn {
+    margin-top: 5px!important;
 }
