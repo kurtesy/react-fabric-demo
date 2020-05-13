@@ -12,6 +12,7 @@ import Circle from '../Figures/Circle'
 import Line from '../Figures/Line'
 import BackgroundControlPanel from './extendedPanel';
 import Picture from '../Image/Picture'
+import cursor_pencil from '../../assets/cursor_pencil.png'
 
 // const pdfjsLib = window['pdfjs-dist/build/pdf'];
 const fabric = window.fabric;
@@ -39,6 +40,7 @@ class Panel extends Component {
     addTextBox: false,
     eraserActive: false,
     selectedOption: 'select',
+    cursor: 'pointer'
   }
 
   componentMap = {
@@ -84,7 +86,8 @@ class Panel extends Component {
   canUseBrush = event => {
     let curColor = document.getElementById('color').value;
     this.setState({ canDraw: true, selectedOption: 'pencil',
-      brushcolor: this.state.eraserActive ? curColor: this.state.brushcolor}, function () {
+      brushcolor: this.state.eraserActive ? curColor: this.state.brushcolor,
+      cursor: 'url(http://icons.iconarchive.com/icons/custom-icon-design/pretty-office-10/24/Pencil-icon.png) 4 64, crosshair'}, function () {
       this.props.onChange(this.state)
     }.bind(this));
   }
@@ -100,7 +103,8 @@ class Panel extends Component {
     e.preventDefault();
     console.log('eraser');
     this.setState({ brushcolor: 'white', canDraw: true,
-      eraserActive: true, selectedOption: 'erase' }, function () {
+      eraserActive: true, selectedOption: 'erase',
+      cursor: 'url(http://icons.iconarchive.com/icons/designcontest/vintage/24/Eraser-icon.png) 4 64, crosshair'}, function () {
       this.props.onChange(this.state)
     }.bind(this));
   }
@@ -182,76 +186,76 @@ class Panel extends Component {
         <div className={panelStyles.scrollbar} id="style-1">
           <ul>
           <li className={panelStyles.darkerli}>
-            <a onClick={this.enableSelection}>
+            <div className={panelStyles.listItems} onClick={this.enableSelection}>
               <button title="Select" className={styles.btn} id="select"> <FaMousePointer />
               </button>
               <span className={panelStyles.navText}>Select</span>
-            </a>
+            </div>
           </li>
           <li className={panelStyles.darkerli}>
-            <a onClick={this.canUseBrush}>
+            <div className={panelStyles.listItems} onClick={this.canUseBrush}>
               <button title="Pencil Tool" className={styles.btn} id="canDraw"> <FaPencilAlt />
               </button>
               <span className={panelStyles.navText}>Pencil</span>
-            </a>
+            </div>
           </li>
             <li className={panelStyles.darkerli}>
-              <a onClick={this.eraser}>
+              <div className={panelStyles.listItems} onClick={this.eraser}>
               <button title="Eraser" className={styles.btn} id="erase"> <FaEraser />
               </button>
               <span className={panelStyles.navText}>Eraser</span>
-              </a>
+              </div>
             </li>
             <li className={panelStyles.darkerli}>
-              <a onClick={event => {this.addElement(event,'textBox')}}>
+              <div className={panelStyles.listItems} onClick={event => {this.addElement(event,'textBox')}}>
               <button title="Text Box" className={styles.btn} id="textBox"><FaICursor />
               </button>
               <span className={panelStyles.navText}>Text Box</span>
-              </a>
+              </div>
             </li>
             <li className={panelStyles.darkerli}>
-              <a>
+              <div className={panelStyles.listItems}>
                 <button title="pic" className={styles.btn} id="pic">
                   <FaFileImage />
                 </button>
                 <span className={panelStyles.navText}>Add Picture
                 <Picture canvas={this.props.canvas} setLoading={this.props.setLoading}/>
                 </span>
-              </a>
+              </div>
             </li>
             <li className={panelStyles.darkerli}>
-              <a onClick={event => {this.addElement(event,'rect')}}>
+              <div className={panelStyles.listItems} onClick={event => {this.addElement(event,'rect')}}>
                 <button title="Rectangle" className={styles.btn} id="rect">
                   <FaSquareFull />
                 </button>
                 <span className={panelStyles.navText}>Add Rectangle</span>
-              </a>
+              </div>
             </li>
             <li className={panelStyles.darkerli}>
-              <a onClick={event => {this.addElement(event,'circle')}}>
+              <div className={panelStyles.listItems} onClick={event => {this.addElement(event,'circle')}}>
                 <button title="Circle" className={styles.btn} id="circle">
                   <FaCircle />
                 </button>
                 <span className={panelStyles.navText}>Add Circle</span>
-              </a>
+              </div>
             </li>
             {/*<li className={panelStyles.darkerli}>*/}
-            {/*  <a>*/}
+            {/*  <div className={panelStyles.listItems}>*/}
             {/*  <button disabled={true} title="Draw Line" className={styles.btn} id="line" onClick={event => {this.drawLine(event,'line')}}><FaSlash />*/}
             {/*  </button>*/}
             {/*  <span className={panelStyles.navText}>Draw Line</span>*/}
-            {/*  </a>*/}
+            {/*  </div>*/}
             {/*</li>*/}
             <li className={panelStyles.darkerli}>
-              <a onClick={event => {this.deleteObj(event)}}>
+              <div className={panelStyles.listItems} onClick={event => {this.deleteObj(event)}}>
                 <button title="Delete" className={styles.btn} id="del">
                   <FaRegWindowClose />
                 </button>
                 <span className={panelStyles.navText}>Delete Selection</span>
-              </a>
+              </div>
             </li>
             <li className={panelStyles.darkerli}>
-              <a onClick={event => {this.undoRedo(event)}}>
+              <div className={panelStyles.listItems} onClick={event => {this.undoRedo(event)}}>
                 <button title="Undo" className={styles.btn} id="undo">
                   <FaUndo />
                 </button>
@@ -259,19 +263,19 @@ class Panel extends Component {
                 {/*  <FaRegWindowClose />*/}
                 {/*</button>*/}
                 <span className={panelStyles.navText}>Undo</span>
-              </a>
+              </div>
             </li>
             <li className={panelStyles.darkerli}>
-              <a>
+              <div className={panelStyles.listItems}>
                 <FaPalette className={styles.btn}/>
               <span className={panelStyles.navText}>
                 <input title="Color Selector" id="color" type="color" defaultValue="#ff0000"
                        onChange={this.brushColorChange}/>
                 Color Selector</span>
-              </a>
+              </div>
             </li>
             <li className={panelStyles.darkerli}>
-              <a>
+              <div className={panelStyles.listItems}>
                 <FaPaintBrush className={styles.btn}/>
               <span className={panelStyles.navText}>
                 <button title="brushSize1" id="brushSize1" className={styles.brush}
@@ -293,10 +297,10 @@ class Panel extends Component {
                         onClick={event => this.brushSizeChange(event,25)}><FaCircle style={{fontSize: 25}}/>
                 </button>
               </span>
-              </a>
+              </div>
             </li>
             <li className={panelStyles.darkerli}>
-              <a>
+              <div className={panelStyles.listItems}>
               <FaAngleDoubleRight className={styles.btn}/>
               <span className={panelStyles.navText}><
                 BackgroundControlPanel
@@ -306,7 +310,7 @@ class Panel extends Component {
                 setClient={this.props.setClient}
               />
               </span>
-              </a>
+              </div>
             </li>
 
           {/*<button title="Add Rectangle" id="rect" className={styles.btn} onClick={this.renderFigure}><FaSquareFull />*/}

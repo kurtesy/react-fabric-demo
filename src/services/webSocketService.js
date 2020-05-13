@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { w3cwebsocket as W3CWebSocket } from "websocket";
+import ReconnectingWebSocket from "reconnectingwebsocket";
 import PropTypes from 'prop-types';
 import config from '../config/config.dev'
 
@@ -13,7 +13,8 @@ class WebSocketService extends Component {
     messages: [],
     sendMessage: function() {}
   }
-  client = new W3CWebSocket(config.WS_URL);
+  socketOptions = {debug: true, reconnectInterval: 10000, maxReconnectAttempts: 5}
+  client = new ReconnectingWebSocket(config.WS_URL, null, this.socketOptions);
   componentDidMount() {
     this.client.onopen = () => {
       console.log('WebSocket Client Connected');
@@ -24,7 +25,7 @@ class WebSocketService extends Component {
       // newMessage.push(message.data);
       this.setState({messages: newMessage})
       this.setState({status: 'Message:'+JSON.stringify(newMessage)+' received'})
-      console.log(this.state.messages);
+      console.log('JSON Data sent');
       this.props.sendMessage(newMessage);
     };
     this.props.setClient(this.client);

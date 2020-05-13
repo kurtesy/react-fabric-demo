@@ -1,5 +1,4 @@
 @import url(//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css);
-@import url(https://fonts.googleapis.com/css?family=Titillium+Web:300);
 
 .boxTitle {
     font-family: sans-serif;
@@ -17,8 +16,8 @@
 
 body
 {
-    margin:0px;
-    padding:0px;
+    margin:0;
+    padding:0;
     font-family: "Open Sans", arial, serif;
     color: #393939;
     font-weight:300;
@@ -123,7 +122,7 @@ body
     width:250px;
 }
 
-.mainMenu li>a {
+.mainMenu li>.listItems {
     position:relative;
     width:244px;
     display:table;
@@ -157,7 +156,7 @@ body
     display:table-cell;
     vertical-align:middle;
     width:190px;
-    font-family: 'Titillium Web', sans-serif;
+    font-family: 'Open Sans', sans-serif;
 
 }
 
@@ -186,7 +185,7 @@ li:hover, li:focus {
     transition: all 0.1s ease-in-out, width 0, height 0, top 0, left 0;
 }
 
-a:hover,a:focus {
+.listItems:hover,.listItems:focus {
     text-decoration:none;
     border-left:0 solid #F7F7F7;
 }
@@ -248,8 +247,7 @@ nav ul,nav li {
     height: 100%;
 }
 @font-face {
-    font-family: 'Titillium Web';
+    font-family: 'Open Sans';
     font-style: normal;
     font-weight: 300;
-    src: local('Titillium WebLight'), local('TitilliumWeb-Light'), url(http://themes.googleusercontent.com/static/fonts/titilliumweb/v2/anMUvcNT0H1YN4FII8wpr24bNCNEoFTpS2BTjF6FB5E.woff) format('woff');
 }

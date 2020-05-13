@@ -27,7 +27,7 @@ class DesignCanvas extends React.Component {
   canvas = new fabric.Canvas(this.c);
 
   state = {
-    mousecursor: null,
+    cursor: 'pointer',
     backgroundImg: null,
     canvas: this.canvas,
     setSizeBackgroundImg: false,
@@ -48,7 +48,7 @@ class DesignCanvas extends React.Component {
     this.canvas.freeDrawingBrush.color = "#ff0000";
     this.canvas.renderAll();
     this.setState({canvas: this.canvas});
-    this.interval = setInterval(() => this.sendCanvasData(), 1000);
+    this.interval = setInterval(() => this.sendCanvasData(), 10000);
   }
 
   updateCanvas = newCanvas => {
@@ -63,6 +63,7 @@ class DesignCanvas extends React.Component {
     this.canvas.freeDrawingBrush.width = data.brushsize;
     this.canvas.isDrawingMode = data.canDraw;
     this.canvas.freeDrawingBrush.color = data.brushcolor;
+    this.canvas.freeDrawingCursor = data.cursor;
     this.canvas.renderAll();
     console.log('onControlChange', this.canvas.getObjects());
   }

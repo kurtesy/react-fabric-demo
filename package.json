@@ -18,8 +18,9 @@
     "react-file-picker-preview": "0.0.9",
     "react-icons": "^3.10.0",
     "react-router": "^5.1.2",
-    "react-scripts": "^3.4.1",
+    "react-scripts": "3.2.0",
     "react-spinners": "^0.8.3",
+    "reconnectingwebsocket": "^1.0.0",
     "websocket": "^1.0.31",
     "yarn": "^1.22.4"
   },
