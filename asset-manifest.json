@@ -1,21 +1,21 @@
 {
   "files": {
-    "main.css": "/react-fabric-demo/static/css/main.4f1be2ef.chunk.css",
-    "main.js": "/react-fabric-demo/static/js/main.f221f2d7.chunk.js",
-    "main.js.map": "/react-fabric-demo/static/js/main.f221f2d7.chunk.js.map",
+    "main.css": "/react-fabric-demo/static/css/main.601634d8.chunk.css",
+    "main.js": "/react-fabric-demo/static/js/main.af7499f7.chunk.js",
+    "main.js.map": "/react-fabric-demo/static/js/main.af7499f7.chunk.js.map",
     "runtime-main.js": "/react-fabric-demo/static/js/runtime-main.5c872540.js",
     "runtime-main.js.map": "/react-fabric-demo/static/js/runtime-main.5c872540.js.map",
-    "static/js/2.0572353c.chunk.js": "/react-fabric-demo/static/js/2.0572353c.chunk.js",
-    "static/js/2.0572353c.chunk.js.map": "/react-fabric-demo/static/js/2.0572353c.chunk.js.map",
+    "static/js/2.4a822a31.chunk.js": "/react-fabric-demo/static/js/2.4a822a31.chunk.js",
+    "static/js/2.4a822a31.chunk.js.map": "/react-fabric-demo/static/js/2.4a822a31.chunk.js.map",
     "index.html": "/react-fabric-demo/index.html",
-    "precache-manifest.2aea05e99df4a103f9c9cf0868441fc4.js": "/react-fabric-demo/precache-manifest.2aea05e99df4a103f9c9cf0868441fc4.js",
+    "precache-manifest.3bd23fae68614b5fb1ba57e1bedd32bb.js": "/react-fabric-demo/precache-manifest.3bd23fae68614b5fb1ba57e1bedd32bb.js",
     "service-worker.js": "/react-fabric-demo/service-worker.js",
-    "static/css/main.4f1be2ef.chunk.css.map": "/react-fabric-demo/static/css/main.4f1be2ef.chunk.css.map"
+    "static/css/main.601634d8.chunk.css.map": "/react-fabric-demo/static/css/main.601634d8.chunk.css.map"
   },
   "entrypoints": [
     "static/js/runtime-main.5c872540.js",
-    "static/js/2.0572353c.chunk.js",
-    "static/css/main.4f1be2ef.chunk.css",
-    "static/js/main.f221f2d7.chunk.js"
+    "static/js/2.4a822a31.chunk.js",
+    "static/css/main.601634d8.chunk.css",
+    "static/js/main.af7499f7.chunk.js"
   ]
 }
